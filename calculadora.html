@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Calculadora de Sam</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+    <style>
+        input[type="button"].arit{background-color:rgb(0, 107, 75)}
+        input[type="button"].arit:hover{background-color:rgb(1, 145, 101)}
+        input[type="button"].igual{background-color: rgb(248, 53, 79)}
+        input[type="button"].igual:hover{background-color: rgb(243, 105, 123)}
+        input[type="button"].clear{background-color: rgb(148, 148, 148)}
+        input[type="button"].clear:hover{background-color: rgb(179, 178, 178)}
+        #CE{position:absolute; right:685px; top:111px}
+        #C{position:absolute; right:621px; top:111px}
+        #fl{position:absolute; right:557px; top:111px}
+        #÷{position:absolute; right:749px; top:111px}
+        #n9{position:absolute; right:621px; top:175px}
+        #n8{position:absolute; right:685px; top:175px}
+        #n7{position:absolute; right:749px; top:175px}
+        #x{position:absolute; right:557px; top:175px}
+        #n6{position:absolute; right:621px; top:239px}
+        #n5{position:absolute; right:685px; top:239px}
+        #n4{position:absolute; right:749px; top:239px}
+        #m{position:absolute; right:557px; top:239px}
+        #n3{position:absolute; right:621px; top:303px}
+        #n2{position:absolute; right:685px; top:303px}
+        #n1{position:absolute; right:749px; top:303px}
+        #ma{position:absolute; right:557px; top:303px}
+        #mm{position:absolute; right:621px; top:367px}
+        #n0{position:absolute; right:685px; top:367px}
+        #np{position:absolute; right:749px; top:367px}
+        #i{position:absolute; right:557px; top:367px}
+        form{background-color:white}
+        input[type="text"]{background-color: black; border: 0px; width:250px; height: 40px; font-size:20px; color:white; pointer-events: none}
+        input[name="txtcaja1"]{height: 20px; font-size: 25px}
+        input[name="txtcaja2"]{margin-bottom: 5px; font-size:26px}
+        input[type="button"]{font-size: 15px; width: 60px; border: 0px; height: 60px; color: white; background-color: rgb(250, 60, 92); margin-bottom: 5px}
+    </style>
+</head>
+<body>
+    <center>
+        <form name="f1"><br>
+        <input type="text" name="txtcaja1"><br>
+        <input type="text" name="txtcaja2" value=00><br>
+        <input type="button" id= CE class="clear" onClick="document.f1.txtcaja2.value='0'" value= "CE">
+        <input type="button" id= C class="clear" onClick="document.f1.txtcaja2.reset(); blocdel=false" value= "C">
+        <input type="button" id= fl class="clear" onClick="deletecarac()" value= "<">
+        <input type="button" id= ÷ class="clear" onClick="arit('/')" value= "÷"><br>
+        <input type="button" id= n7 class="arit" onClick="escribir(this.value)" value= "7">
+        <input type="button" id= n8 class="arit" onClick="escribir(this.value)" value= "8">
+        <input type="button" id= n9 class="arit" onClick="escribir(this.value)" value= "9">
+        <input type="button" id= x class="clear" onClick="arit('x')" value= "X">
+        <input type="button" id= n4 class="arit" onClick="escribir(this.value)" value= "4">
+        <input type="button" id= n5 class="arit" onClick="escribir(this.value)" value= "5">
+        <input type="button" id= n6 class="arit" onClick="escribir(this.value)" value= "6">
+        <input type="button" id= m class="clear" onClick="arit('-')" value= "-">
+        <input type="button" id= n1 class="arit" onClick="escribir(this.value)" value= "1">
+        <input type="button" id= n2 class="arit" onClick="escribir(this.value)" value= "2">
+        <input type="button" id= n3 class="arit" onClick="escribir(this.value)" value= "3">
+        <input type="button" id= ma class="clear" onClick="arit('+')" value= "+">
+        <input type="button" id= mm class="clear" onClick="masmenos()" value= "±">
+        <input type="button" id= n0 class="arit" onClick="escribir(this.value)" value= "0">
+        <input type="button" id= np class="igual" onClick="escribir('.')" value= ".">
+        <input type="button" id= i class="igual" onClick="calcular()" value= "=">
+        </form>
+    </center>
+    <script type="text/javascript">
+    var borrar = false;
+    function deletecarac(){
+        var caja2 = document.f1.txtcaja2.value;
+        if(caja2 == "" || caja2 == "0" || caja2.length == 1 && blocdel!=true){
+            document.f1.txtcaja2.valie = "0"
+        }
+        else if(blocdel!=true){
+            var res = caja2.substring(0,caja2.length-1);
+            document.f1.txtcaja2.value = res;
+        }
+    }
+    function escribir(n){
+        var caja2 = document.f1.txtcaja2.value;
+        if(borrar){
+        //alert("se borro");
+        document.f1.txtcaja2.value="";
+        borrar = false;
+        document.f1.txtcaja2.value = n;
+    }
+    else if (caja2 == "0" && n !="."){
+        cajao = caja2.replace("0", "")
+        document.f1.txtcaja2.value = cajao + n;
+    }
+    else{
+        document.f1.txtcaja2.value = caja2 + n;
+    }
+    }
+    function raiz(){
+        var caja1 = document.f1.txtcaja1.value;
+        var caja2 = document.f1.txtcaja2.value;
+        document.f1.txtcaja1.value = "Math.sqrt("+ caja2 + caja1+")";
+        document.f1.txtcaja2.value= "";
+    }
+    function arit(o){
+        var caja1 = document.f1.txtcaja1.value;
+        var caja2 = document.f1.txtcaja2.value;
+        var unum = caja1.substring(caja1.length-1);
+        calcular()
+        if (unum == "+" || unum=="-" || unum== "*" || unum=="/" ){
+            unum = unum.replace(unum,o);
+            var res = caja1.subtring(0,caja1.length-1);
+            document.f1.txtcaja1.value = res+unum
+        }
+        if (caja1 == " && caja2 !¿ "){
+            document.f1.txtcaja1.value = caja2 + o;
+        }
+        else{
+            document.f1.txtcaja1.value = caja1 + caja2 + o
+        }
+        borrar = true;
+    }
+    function calcular (){
+        var caja1 = document.f1.txtcaja1.value;
+        var caja2 = document.f1.txtcaja2.value;
+        document.f1.txtcaja2.value = eval(caja1 + caja2);
+        document.f1.txtcaja1.value= "";
+        borrar=true;
+        blocdel = true;
+    }
+    function masmenos(){
+        var caja2 = document.f1.txtcaja2.value;
+        if (caja2 > 0){
+            document.f1.txtcaja2.value = "(-"+ caja2 + ")";
+        }
+        else{
+            cajaplus = caja2.replace(/[-|(|)]/g, "");
+            document.f1.txtcaja2.value= cajaplus;
+        }
+    }
+    </script>
+    </body>
+</html>
